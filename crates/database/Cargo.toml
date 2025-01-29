@@ -1,0 +1,20 @@
+[package]
+name = "database"
+# don't change this, it's updated before an actual build by update-version.sh
+version = "0.0.0-development"
+edition = "2021"
+rust-version = "1.84.0"
+authors = ["Kristof Mattei"]
+description = "Gardyn Management Database"
+license-file = "LICENSE"
+categories = ["fun"]
+keywords = ["random"]
+repository = "https://github.com/kristof-mattei/gardyn-management"
+
+[dependencies]
+chrono = "0.4.39"
+diesel = { version = "2.2.6", features = ["chrono", "postgres"] }
+diesel-async = { version = "0.5.2", features = ["deadpool", "postgres"] }
+color-eyre = { git = "https://github.com/eyre-rs/eyre", rev = "c4ee249f7c51dc6452e8704ae8d117d90d6eeebc" }
+serde = { version = "1.0.217", features = ["derive"] }
+my-workspace-hack = { version = "0.1", path = "../my-workspace-hack" }

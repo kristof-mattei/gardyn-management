@@ -7,11 +7,11 @@
         {
             "type": "lldb",
             "request": "launch",
-            "name": "Debug executable 'magwords'",
+            "name": "Debug executable 'gardyn-management'",
             "cargo": {
-                "args": ["build", "--bin=magwords", "--package=magwords"],
+                "args": ["build", "--bin=gardyn-management", "--package=gardyn-management"],
                 "filter": {
-                    "name": "magwords",
+                    "name": "gardyn-management",
                     "kind": "bin"
                 }
             },
@@ -19,8 +19,8 @@
             "cwd": "${workspaceFolder}",
             "env": {
                 "RUST_BACKTRACE": "1",
-                "USE_PROXY": "true",
-                "RUST_LOG": "INFO,socketioxide=INFO,engineioxide=INFO,magwords=TRACE"
+                "PROXY_FRONT_END": "127.0.0.1:4000",
+                "RUST_LOG": "INFO,socketioxide=INFO,engineioxide=INFO,gardyn_management=TRACE"
             },
             "internalConsoleOptions": "openOnSessionStart",
             "terminal": "console"
@@ -28,11 +28,11 @@
         {
             "type": "lldb",
             "request": "launch",
-            "name": "Debug unit tests in executable 'magwords'",
+            "name": "Debug unit tests in executable 'gardyn-management'",
             "cargo": {
-                "args": ["test", "--no-run", "--bin=magwords", "--package=magwords"],
+                "args": ["test", "--no-run", "--bin=gardyn-management", "--package=gardyn-management"],
                 "filter": {
-                    "name": "magwords",
+                    "name": "gardyn-management",
                     "kind": "bin"
                 }
             },
@@ -40,8 +40,8 @@
             "cwd": "${workspaceFolder}",
             "env": {
                 "RUST_BACKTRACE": "1",
-                "USE_PROXY": "true",
-                "RUST_LOG": "INFO,socketioxide=INFO,engineioxide=INFO,magwords=TRACE"
+                "PROXY_FRONT_END": "127.0.0.1:4000",
+                "RUST_LOG": "INFO,socketioxide=INFO,engineioxide=INFO,gardyn_management=TRACE"
             },
             "internalConsoleOptions": "openOnSessionStart",
             "terminal": "console"
@@ -51,7 +51,7 @@
             "request": "launch",
             "name": "Debug integration test 'integration_tests'",
             "cargo": {
-                "args": ["test", "--no-run", "--test=integration_tests", "--package=magwords"],
+                "args": ["test", "--no-run", "--test=integration_tests", "--package=gardyn-management"],
                 "filter": {
                     "name": "integration_tests",
                     "kind": "test"
@@ -61,8 +61,8 @@
             "cwd": "${workspaceFolder}",
             "env": {
                 "RUST_BACKTRACE": "1",
-                "USE_PROXY": "true",
-                "RUST_LOG": "INFO,socketioxide=INFO,engineioxide=INFO,magwords=TRACE"
+                "PROXY_FRONT_END": "127.0.0.1:4000",
+                "RUST_LOG": "INFO,socketioxide=INFO,engineioxide=INFO,gardyn_management=TRACE"
             },
             "internalConsoleOptions": "openOnSessionStart",
             "terminal": "console"

@@ -9,7 +9,9 @@
     },
     "rust-analyzer.debug.openDebugPane": true,
     "rust-analyzer.runnables.extraEnv": {
-        "USE_PROXY": "true",
-        "RUST_LOG": "INFO,socketioxide=INFO,engineioxide=INFO,magwords=TRACE"
-    }
+        "PROXY_FRONT_END": "127.0.0.1:4000",
+        "RUST_LOG": "INFO,socketioxide=INFO,engineioxide=INFO,gardyn_management=TRACE"
+    },
+    "Prettier-SQL.SQLFlavourOverride": "sql",
+    "Prettier-SQL.keywordCase": "upper"
 }

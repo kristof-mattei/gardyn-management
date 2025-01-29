@@ -1,6 +1,8 @@
 import path from "node:path";
 
 import { codecovVitePlugin } from "@codecov/vite-plugin";
+import tailwindcss from "@tailwindcss/vite";
+import react from "@vitejs/plugin-react";
 import type { UserConfig } from "vite";
 import { loadEnv } from "vite";
 import { checker } from "vite-plugin-checker";
@@ -15,13 +17,6 @@ export default defineConfig(({ mode }) => {
 
     const config: UserConfig = {
         appType: "spa",
-        css: {
-            preprocessorOptions: {
-                scss: {
-                    silenceDeprecations: ["mixed-decls", "color-functions", "global-builtin", "import"],
-                },
-            },
-        },
 
         build: {
             emptyOutDir: true,
@@ -40,11 +35,13 @@ export default defineConfig(({ mode }) => {
 
         plugins: [
             svgr(),
+            react(),
             viteTsConfigPaths(),
             checker({ typescript: true }),
+            tailwindcss(),
             codecovVitePlugin({
                 enableBundleAnalysis: environment["CODECOV_TOKEN"] !== undefined,
-                bundleName: "library",
+                bundleName: "gardyn-management-front-end",
                 uploadToken: environment["CODECOV_TOKEN"] ?? "",
             }),
         ],
@@ -62,14 +59,14 @@ export default defineConfig(({ mode }) => {
                 port: 4000,
             },
             cors: true,
-            // proxy: {
-            //     "/api": {
-            //         target: "http://localhost:3001",
-            //         changeOrigin: true,
-            //         secure: false,
-            //         ws: true,
-            //     },
-            // },
+            proxy: {
+                "/api": {
+                    target: "http://localhost:3000",
+                    changeOrigin: true,
+                    secure: false,
+                    ws: true,
+                },
+            },
         },
         test: {
             coverage: {

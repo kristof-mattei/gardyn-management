@@ -1,0 +1,68 @@
+[package]
+name = "gardyn-management"
+# don't change this, it's updated before an actual build by update-version.sh
+version = "0.0.0-development"
+edition = "2021"
+rust-version = "1.84.0"
+authors = ["Kristof Mattei"]
+description = "Gardyn Management"
+license-file = "LICENSE"
+categories = ["fun"]
+keywords = ["random"]
+repository = "https://github.com/kristof-mattei/gardyn-management"
+
+[lib]
+name = "gardyn_management"
+path = "src/lib.rs"
+
+[[bin]]
+name = "gardyn-management"
+path = "src/main.rs"
+
+[[bin]]
+name = "gardyn-management-seed"
+path = "src/bin/seed.rs"
+
+[[test]]
+name = "gardyn-management"
+path = "tests/integration_tests.rs"
+
+[features]
+default = []
+tokio-console = []
+
+[dependencies]
+database = { path = "../database" }
+axum = { version = "0.8.1", features = ["macros"] }
+axum-proxy = { version = "0.3.0", features = ["axum"] }
+color-eyre = { git = "https://github.com/eyre-rs/eyre", rev = "c4ee249f7c51dc6452e8704ae8d117d90d6eeebc" }
+console-subscriber = "0.4.1"
+futures-util = "0.3.31"
+serde = { version = "1.0.217", features = ["derive"] }
+serde_json = "1.0.138"
+tokio = { version = "1.43.0", features = [
+    "rt-multi-thread",
+    "macros",
+    "time",
+    "signal",
+] }
+tokio-util = { version = "0.7.13", features = ["rt"] }
+tracing = "0.1.41"
+tracing-error = "0.2.1"
+tracing-subscriber = { version = "0.3.19", features = ["env-filter"] }
+tower = "0.5.2"
+tower-http = { version = "0.6.2", features = ["cors", "fs", "trace"] }
+url = { version = "2.5.3", features = ["serde"] }
+diesel-async = { version = "0.5.2", features = ["deadpool", "postgres"] }
+diesel = { version = "2.2.6", features = ["chrono", "postgres"] }
+byteorder = "1.5.0"
+dotenvy = "0.15.7"
+chrono = "0.4.39"
+my-workspace-hack = { version = "0.1", path = "../my-workspace-hack" }
+
+# We compile the Docker container with musl to get a static library. Smaller, faster.
+# BUT that means that we need to include openssl
+# Documentation on the syntax:
+# https://doc.rust-lang.org/cargo/reference/specifying-dependencies.html#platform-specific-dependencies
+[target.'cfg(all(any(target_arch="x86_64", target_arch="aarch64"), target_os="linux", target_env="musl"))'.dependencies]
+openssl = { version = "0.10.69", features = ["vendored"] }

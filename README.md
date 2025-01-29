@@ -1,13 +1,21 @@
-# Magwords
+# Gardyn Management
 
-A Rust rewrite of the all-popular MagWords (I cannot find the original link anymore):
+Use cases to cover:
 
-Technologies used:
+Actions
 
-- Rust
-- Tokio
-- socketioxide (WebSockets)
+- Add Gardyn
+- Add plants to Gardyn
+- Moved plant
+- Burried plant
+- Replaced plant (= burry & add)
 
-Original: http://isnoop.net/toys/magwords.php / https://web.archive.org/web/20150719111342/http://isnoop.net:80/toys/magwords.php
+Log (mark what happened, what you did, etc):
 
-Other version: http://magwords.club / https://web.archive.org/web/20161116175213/http://magwords.club:80/
+- Per plant: Sprout / Thin / (Fruiting plants) cut first flower (only 1 can happen) / Check roots / pet plants / talk to plants
+- Per Gardyn: fed / cleaned
+
+Reminders:
+
+- When to feed (not needed as it added per gallon of water)
+- When to add h2o2

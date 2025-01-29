@@ -1,5 +1,10 @@
 allowed-duplicate-crates = [
+    "axum",
+    "axum-core",
+    "base64",
     "getrandom",
+    "hashbrown",
+    "indexmap",
     "matchit",
     "regex-automata",
     "regex-syntax",
