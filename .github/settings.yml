@@ -7,7 +7,7 @@ repository:
   # name: repo-name
 
   # A short description of the repository that will show up on GitHub
-  # description: description of repo
+  description: Application to manage the events that happe to your Gardyn
 
   # A URL with more information about the repository
   # homepage: https://example.github.io/
