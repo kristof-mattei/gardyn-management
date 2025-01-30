@@ -21,7 +21,7 @@ log = { version = "0.4", default-features = false, features = ["std"] }
 memchr = { version = "2" }
 num-traits = { version = "0.2" }
 rand = { version = "0.8", features = ["small_rng"] }
-regex = { version = "1" }
+regex = { version = "1.11.1" }
 regex-automata = { version = "0.4", default-features = false, features = ["dfa-onepass", "hybrid", "meta", "nfa-backtrack", "perf-inline", "perf-literal", "unicode"] }
 regex-syntax = { version = "0.8" }
 smallvec = { version = "1", default-features = false, features = ["const_new"] }
