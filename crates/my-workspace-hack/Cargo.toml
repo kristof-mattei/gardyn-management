@@ -15,7 +15,7 @@ publish = false
 
 ### BEGIN HAKARI SECTION
 [dependencies]
-byteorder = { version = "1" }
+byteorder = { version = "1.5.0" }
 futures-util = { version = "0.3", features = ["sink"] }
 log = { version = "0.4", default-features = false, features = ["std"] }
 memchr = { version = "2" }
