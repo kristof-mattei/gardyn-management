@@ -31,7 +31,7 @@ tracing = { version = "0.1", features = ["log"] }
 tracing-subscriber = { version = "0.3", features = ["env-filter"] }
 
 [build-dependencies]
-proc-macro2 = { version = "1" }
+proc-macro2 = { version = "1.0.93" }
 quote = { version = "1" }
 syn = { version = "2", features = ["extra-traits", "fold", "full", "visit", "visit-mut"] }
 
