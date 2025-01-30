@@ -32,7 +32,7 @@ tracing-subscriber = { version = "0.3", features = ["env-filter"] }
 
 [build-dependencies]
 proc-macro2 = { version = "1" }
-quote = { version = "1" }
+quote = { version = "1.0.38" }
 syn = { version = "2", features = ["extra-traits", "fold", "full", "visit", "visit-mut"] }
 
 ### END HAKARI SECTION
