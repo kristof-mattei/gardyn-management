@@ -12,7 +12,7 @@ keywords = ["random"]
 repository = "https://github.com/kristof-mattei/gardyn-management"
 
 [dependencies]
-my-workspace-hack = { version = "0.1", path = "../my-workspace-hack" }
+workspace-hack = { version = "0.1", path = "../workspace-hack" }
 
 chrono = "0.4.39"
 diesel = { version = "2.2.7", features = ["chrono", "postgres"] }

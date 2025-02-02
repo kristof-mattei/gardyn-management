@@ -33,7 +33,7 @@ tokio-console = []
 
 [dependencies]
 database = { path = "../database" }
-my-workspace-hack = { version = "0.1", path = "../my-workspace-hack" }
+workspace-hack = { version = "0.1", path = "../workspace-hack" }
 
 axum = { version = "0.8.1", features = ["macros"] }
 axum-proxy = { version = "0.3.0", features = ["axum"] }
