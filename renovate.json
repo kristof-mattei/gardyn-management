@@ -4,7 +4,5 @@
         "github>kristof-mattei/renovate-config//rust/updateRustVersionInCargoToml",
         "github>kristof-mattei/renovate-config//rust/updateChannelInRustToolchainToml"
     ],
-    "excludeCommitPaths": [
-        "crates/workspace-hack/**"
-    ]
+    "excludeCommitPaths": ["crates/workspace-hack"]
 }
