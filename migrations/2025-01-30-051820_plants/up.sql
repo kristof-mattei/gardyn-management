@@ -1,9 +1,6 @@
 CREATE TABLE plants (
   id SERIAL,
   name VARCHAR(255) NOT NULL,
-  x INTEGER NOT NULL,
-  y INTEGER NOT NULL,
-  gardyn_id INTEGER NOT NULL REFERENCES gardyns (id),
   species_id INTEGER REFERENCES species (id),
   creation TIMESTAMP NOT NULL,
   creation_offset INTEGER NOT NULL,

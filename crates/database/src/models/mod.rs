@@ -10,14 +10,21 @@ pub struct NewGardyn<'s> {
 }
 
 #[derive(Insertable)]
-#[diesel(table_name = crate::schema::plants)]
+#[diesel(table_name = crate::schema::gardyn_slots)]
 #[diesel(check_for_backend(diesel::pg::Pg))]
 #[diesel(belongs_to(Gardyn))]
-pub struct NewPlant<'n, 'ctz> {
-    pub name: &'n str,
+pub struct NewGardynSlot {
     pub x: i32,
     pub y: i32,
     pub gardyn_id: i32,
+    pub plant_id: Option<i32>,
+}
+
+#[derive(Insertable)]
+#[diesel(table_name = crate::schema::plants)]
+#[diesel(check_for_backend(diesel::pg::Pg))]
+pub struct NewPlant<'n, 'ctz> {
+    pub name: &'n str,
     pub creation: chrono::NaiveDateTime,
     pub creation_offset: i32,
     pub creation_time_zone: &'ctz str,
@@ -32,15 +39,24 @@ pub struct Gardyn {
 }
 
 #[derive(Queryable, Selectable, Associations, Identifiable, Serialize, Deserialize)]
-#[diesel(table_name = crate::schema::plants)]
+#[diesel(table_name = crate::schema::gardyn_slots)]
 #[diesel(check_for_backend(diesel::pg::Pg))]
 #[diesel(belongs_to(Gardyn))]
-pub struct Plant {
+#[diesel(belongs_to(Plant))]
+pub struct GardynSlot {
     pub id: i32,
-    pub name: String,
     pub x: i32,
     pub y: i32,
     pub gardyn_id: i32,
+    pub plant_id: Option<i32>,
+}
+
+#[derive(Queryable, Selectable, Identifiable, Serialize, Deserialize)]
+#[diesel(table_name = crate::schema::plants)]
+#[diesel(check_for_backend(diesel::pg::Pg))]
+pub struct Plant {
+    pub id: i32,
+    pub name: String,
     // speciesId -> Int4,
     // creation -> Timestamp,
     // ending -> Timestamp,

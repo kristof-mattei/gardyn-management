@@ -716,6 +716,7 @@ dependencies = [
  "diesel-async",
  "dotenvy",
  "openssl",
+ "serde",
  "tokio",
  "tokio-util",
  "tower-http",

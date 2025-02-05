@@ -9,6 +9,16 @@ diesel::table! {
 }
 
 diesel::table! {
+    gardyn_slots (id) {
+        id -> Int4,
+        gardyn_id -> Int4,
+        plant_id -> Nullable<Int4>,
+        x -> Int4,
+        y -> Int4,
+    }
+}
+
+diesel::table! {
     gardyns (id) {
         id -> Int4,
         #[max_length = 255]
@@ -21,9 +31,6 @@ diesel::table! {
         id -> Int4,
         #[max_length = 255]
         name -> Varchar,
-        x -> Int4,
-        y -> Int4,
-        gardyn_id -> Int4,
         species_id -> Nullable<Int4>,
         creation -> Timestamp,
         creation_offset -> Int4,
@@ -43,8 +50,15 @@ diesel::table! {
     }
 }
 
-diesel::joinable!(plants -> gardyns (gardyn_id));
+diesel::joinable!(gardyn_slots -> gardyns (gardyn_id));
+diesel::joinable!(gardyn_slots -> plants (plant_id));
 diesel::joinable!(plants -> species (species_id));
 diesel::joinable!(species -> categories (category_id));
 
-diesel::allow_tables_to_appear_in_same_query!(categories, gardyns, plants, species,);
+diesel::allow_tables_to_appear_in_same_query!(
+    categories,
+    gardyn_slots,
+    gardyns,
+    plants,
+    species,
+);
