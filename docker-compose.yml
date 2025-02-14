@@ -1,6 +1,6 @@
 services:
   postgres:
-    image: postgres:latest@sha256:3267c505060a0052e5aa6e5175a7b41ab6b04da2f8c4540fc6e98a37210aa2d3
+    image: postgres:latest@sha256:6ebbefa123e24f6b02019440d2b4b922f4c039ca64f510423cddb3abf3005d7d
     ports:
       - 15432:5432
     env_file:
