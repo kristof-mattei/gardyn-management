@@ -1,16 +1,18 @@
 use color_eyre::eyre;
-use database::models::{Gardyn, GardynSlot, NewGardyn, NewGardynSlot, NewPlant, Plant};
-use database::schema::{self};
-use diesel::{insert_into, Connection, PgConnection, RunQueryDsl, SelectableHelper};
+use database::models::{Gardyn, GardynSlot, Plant};
+use database::schema::{gardyn, gardyn_slot, plant};
+use diesel::{ExpressionMethods, SelectableHelper};
+use diesel_async::{AsyncConnection, AsyncPgConnection, RunQueryDsl};
 
-fn main() -> eyre::Result<()> {
+#[tokio::main]
+async fn main() -> eyre::Result<()> {
     color_eyre::config::HookBuilder::default().install()?;
 
     dotenvy::dotenv()?;
 
-    let conn = &mut establish_connection()?;
+    let mut connection = establish_connection().await?;
 
-    let gardyns = insert_gardyns(conn, &["Leafy Castle", "Mary Jane"])?;
+    let gardyns = insert_gardyns(&mut connection, &["Leafy Castle", "Mary Jane"]).await?;
 
     let plant_names = [
         "Banana Peppers",
@@ -45,86 +47,120 @@ fn main() -> eyre::Result<()> {
         "Yellow Swiss Chard",
     ];
 
-    let gardyn_slots = build_slots(conn, gardyns)?;
+    let gardyn_slots = build_slots(&mut connection, gardyns).await?;
 
-    let _plants = insert_plants_in_slot(conn, &gardyn_slots, &plant_names)?;
+    let plants = insert_plants(&mut connection, &plant_names).await?;
+
+    insert_plants_in_slot(&mut connection, &gardyn_slots, &plants).await?;
 
     Ok(())
 }
 
-fn insert_gardyns(
-    conn: &mut PgConnection,
-    gardyns_names: &[&str],
-) -> diesel::result::QueryResult<Vec<Gardyn>> {
-    let gardyns = gardyns_names
+async fn insert_plants(
+    connection: &mut AsyncPgConnection,
+    plant_names: &[&str],
+) -> eyre::Result<Vec<Plant>> {
+    let creation = chrono::Local::now().naive_utc();
+    let creation_offset = chrono::Local::now().offset().local_minus_utc();
+    let creation_time_zone = "America/Phoenix";
+
+    let plants = plant_names
         .iter()
-        .map(|name| NewGardyn { name })
+        .map(|g| {
+            (
+                plant::name.eq(g),
+                plant::creation.eq(creation),
+                plant::creation_offset.eq(creation_offset),
+                plant::creation_time_zone.eq(creation_time_zone),
+            )
+        })
         .collect::<Vec<_>>();
 
-    insert_into(schema::gardyns::table)
-        .values(&gardyns)
-        .returning(Gardyn::as_returning())
-        .get_results(conn)
+    let plants = diesel::insert_into(plant::table)
+        .values(plants)
+        .returning(Plant::as_returning())
+        .load(connection)
+        .await?;
+
+    Ok(plants)
 }
 
-fn build_slots(
-    conn: &mut PgConnection,
+async fn insert_gardyns(
+    connection: &mut AsyncPgConnection,
+    gardyn_names: &[&str],
+) -> eyre::Result<Vec<Gardyn>> {
+    let gardyns = diesel::insert_into(gardyn::table)
+        .values(
+            gardyn_names
+                .iter()
+                .map(|n| gardyn::name.eq(n))
+                .collect::<Vec<_>>(),
+        )
+        .returning(Gardyn::as_returning())
+        .load(connection)
+        .await?;
+
+    Ok(gardyns)
+}
+
+async fn build_slots(
+    connection: &mut AsyncPgConnection,
     gardyns: Vec<Gardyn>,
-) -> diesel::result::QueryResult<Vec<GardynSlot>> {
-    let gardyn_slots = gardyns
+) -> eyre::Result<Vec<GardynSlot>> {
+    let slots = gardyns
         .into_iter()
         .flat_map(|g| {
             (0..3).flat_map(move |x| {
-                (0..10).map(move |y| NewGardynSlot {
-                    x,
-                    y,
-                    gardyn_id: g.id,
-                    plant_id: None,
+                (0..10).map(move |y| {
+                    (
+                        gardyn_slot::x.eq(x),
+                        gardyn_slot::y.eq(y),
+                        gardyn_slot::gardyn_id.eq(g.id),
+                    )
                 })
             })
         })
         .collect::<Vec<_>>();
 
-    insert_into(schema::gardyn_slots::table)
-        .values(gardyn_slots)
+    let slots = diesel::insert_into(gardyn_slot::table)
+        .values(slots)
         .returning(GardynSlot::as_returning())
-        .get_results(conn)
+        .load(connection)
+        .await?;
+
+    Ok(slots)
 }
 
-fn insert_plants_in_slot(
-    conn: &mut PgConnection,
+async fn insert_plants_in_slot(
+    _connection: &mut AsyncPgConnection,
     slots: &[GardynSlot],
-    plant_names: &[&str],
-) -> diesel::result::QueryResult<Vec<Plant>> {
-    let creation = chrono::Local::now().naive_utc();
-    let creation_offset = chrono::Local::now().offset().local_minus_utc();
-    let creation_time_zone = "America/Phoenix";
+    plants: &[Plant],
+) -> eyre::Result<()> {
+    let _slot_ids = slots.iter().map(|slot| slot.id).collect::<Vec<_>>();
+    let _plant_ids = plants.iter().map(|plant| plant.id).collect::<Vec<_>>();
 
-    let plants_to_insert = plant_names
-        .iter()
-        .map(|name| NewPlant {
-            name,
-            creation,
-            creation_offset,
-            creation_time_zone,
-        })
-        .collect::<Vec<_>>();
+    // let updated_row = diesel::update(users.filter(id.eq(1)))
+    //     .set((name.eq("James"), surname.eq("Bond")))
+    //     .get_result(connection);
+    // diesel::update(gard)
 
-    let plants = insert_into(schema::plants::table)
-        .values(plants_to_insert)
-        .returning(Plant::as_returning())
-        .get_results(conn)?;
-
-    for (_slot, _plant) in slots.iter().zip(plants.iter()) {
-
-        // slot.plant_id = Some(plant.id);
-    }
-
-    Ok(plants)
+    // // RETURNING id, x, y, gardyn_id, plant_id
+    // sqlx::query_as!(
+    //     GardynSlot,
+    //     r#"UPDATE
+    //         gardyn_slot
+    //     SET plant_id = u.plant_id
+    //         FROM (SELECT * FROM UNNEST($1::int4[], $2::int4[])) AS u(slot_id, plant_id)
+    //     WHERE
+    //         u.slot_id = gardyn_slot.id"#,
+    //     slot_ids as _,
+    //     plant_ids as _,
+    // )
+    // .fetch_all(connection)
+    // .await?;
+    Ok(())
 }
 
-fn establish_connection() -> eyre::Result<PgConnection> {
-    let url = ::std::env::var("DATABASE_URL")?;
-
-    PgConnection::establish(&url).map_err(Into::into)
+async fn establish_connection() -> eyre::Result<AsyncPgConnection> {
+    Ok(AsyncPgConnection::establish(&std::env::var("DATABASE_URL")?).await?)
 }

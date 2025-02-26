@@ -1,7 +1,7 @@
 // @generated automatically by Diesel CLI.
 
 diesel::table! {
-    categories (id) {
+    category (id) {
         id -> Int4,
         #[max_length = 255]
         name -> Varchar,
@@ -9,7 +9,15 @@ diesel::table! {
 }
 
 diesel::table! {
-    gardyn_slots (id) {
+    gardyn (id) {
+        id -> Int4,
+        #[max_length = 255]
+        name -> Varchar,
+    }
+}
+
+diesel::table! {
+    gardyn_slot (id) {
         id -> Int4,
         gardyn_id -> Int4,
         plant_id -> Nullable<Int4>,
@@ -19,15 +27,7 @@ diesel::table! {
 }
 
 diesel::table! {
-    gardyns (id) {
-        id -> Int4,
-        #[max_length = 255]
-        name -> Varchar,
-    }
-}
-
-diesel::table! {
-    plants (id) {
+    plant (id) {
         id -> Int4,
         #[max_length = 255]
         name -> Varchar,
@@ -50,15 +50,9 @@ diesel::table! {
     }
 }
 
-diesel::joinable!(gardyn_slots -> gardyns (gardyn_id));
-diesel::joinable!(gardyn_slots -> plants (plant_id));
-diesel::joinable!(plants -> species (species_id));
-diesel::joinable!(species -> categories (category_id));
+diesel::joinable!(gardyn_slot -> gardyn (gardyn_id));
+diesel::joinable!(gardyn_slot -> plant (plant_id));
+diesel::joinable!(plant -> species (species_id));
+diesel::joinable!(species -> category (category_id));
 
-diesel::allow_tables_to_appear_in_same_query!(
-    categories,
-    gardyn_slots,
-    gardyns,
-    plants,
-    species,
-);
+diesel::allow_tables_to_appear_in_same_query!(category, gardyn, gardyn_slot, plant, species,);

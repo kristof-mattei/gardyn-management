@@ -1,12 +1,11 @@
 use color_eyre::eyre;
 use diesel_async::AsyncPgConnection;
 
-use crate::models::{GardynSlot, Plant};
-
-pub async fn get_by_gardyn_id(
-    _connection: &mut AsyncPgConnection,
-    _id: i32,
-) -> Result<Vec<(GardynSlot, Option<Plant>)>, eyre::Report> {
+pub async fn move_plant_to_slot(
+    _pool: &mut AsyncPgConnection,
+    _plant_id: i32,
+    _slot_id: i32,
+) -> Result<(), eyre::Report> {
     todo!()
     // struct GardynPlantsSlots {
     //     gardyn_id: i32,
@@ -78,4 +77,40 @@ pub async fn get_by_gardyn_id(
     //     .collect::<Vec<_>>();
 
     // Ok(mapped)
+}
+
+pub async fn swap_plants_in_slots(
+    _pool: &mut AsyncPgConnection,
+    _slot_id1: i32,
+    _slot_id2: i32,
+) -> Result<(), eyre::Report> {
+    // let slots_with_plants = sqlx::query_as!(
+    //     GardynPlantsSlots,
+    //     r#"
+    //         WITH map AS (
+    //             SELECT *
+    //             FROM (VALUES
+    //                 ($1, $2),
+    //                 ($2, $1),
+    //             ) AS a (to, from)
+    //         )
+
+    //         UPDATE gardyn_slot
+    //         SET
+    //             ColumnA = source.ColumnA,
+    //             ColumnB = source.ColumnB,
+    //             ColumnC = source.ColumnC
+    //         FROM
+    //             SomeTable AS destination
+    //             JOIN map ON map.destID = destination.ID
+    //             JOIN SomeTable AS source ON source.ID = map.srcID
+
+    //     WHERE gardyn_slot.gardyn_id = $1"#,
+    //     id
+    // )
+    // .fetch_all(pool)
+    // .await?;
+    // Ok(mapped)
+
+    todo!()
 }

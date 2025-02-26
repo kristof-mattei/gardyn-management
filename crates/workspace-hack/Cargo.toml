@@ -14,25 +14,8 @@ publish = false
 # are managed by hakari.
 
 ### BEGIN HAKARI SECTION
-[dependencies]
-byteorder = { version = "1.5.0" }
-futures-util = { version = "0.3.31", features = ["sink"] }
-log = { version = "0.4.25", default-features = false, features = ["std"] }
-memchr = { version = "2.7.4" }
-num-traits = { version = "0.2.19" }
-rand = { version = "0.8.5", features = ["small_rng"] }
-regex = { version = "1.11.1" }
-regex-automata = { version = "0.4.9", default-features = false, features = ["dfa-onepass", "hybrid", "meta", "nfa-backtrack", "perf-inline", "perf-literal", "unicode"] }
-regex-syntax = { version = "0.8.5" }
-smallvec = { version = "1.13.2", default-features = false, features = ["const_new"] }
-tokio = { version = "1.43.0", features = ["fs", "io-std", "io-util", "macros", "net", "rt-multi-thread", "signal", "sync", "time", "tracing"] }
-tokio-util = { version = "0.7.13", features = ["codec", "io", "rt"] }
-tracing = { version = "0.1.41", features = ["log"] }
-tracing-subscriber = { version = "0.3.19", features = ["env-filter"] }
 
-[build-dependencies]
-proc-macro2 = { version = "1.0.93" }
-quote = { version = "1.0.38" }
-syn = { version = "2.0.98", features = ["extra-traits", "fold", "full", "visit", "visit-mut"] }
-
+# Disabled by running `cargo hakari disable`.
+# To re-enable, run:
+#     cargo hakari generate
 ### END HAKARI SECTION

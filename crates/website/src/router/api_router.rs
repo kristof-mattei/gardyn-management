@@ -1,13 +1,8 @@
-use std::time::Duration;
-
+use axum::extract::{Json, Path, State};
+use axum::routing::{get, post};
 use axum::Router;
-use axum::{extract::Json, routing::get};
-use axum::{
-    extract::{Path, State},
-    routing::post,
-};
 use database::models::{Gardyn, GardynSlot, Plant};
-use serde::Deserialize;
+use serde_json::json;
 
 use crate::state::ApplicationState;
 use crate::states::pool_wrapper::PoolWrapper;
@@ -16,13 +11,18 @@ pub fn build_api_router(state: ApplicationState) -> Router {
     Router::new()
         .route("/gardyns", get(gardyns))
         .route("/gardyn/{id}/plants", get(plants))
-        .route("/plants/{plant_id}/move", post(move_plant))
+        .route("/plants/{plant_id}/move/{slot_id}", post(move_plant))
+        .route(
+            "/slots/{slot_id1}/swap/{slot_id2}",
+            post(swap_plants_in_slots),
+        )
         .route("/plants/{id}/pause", get(plants))
         .route("/plants/{id}/terminate", get(plants))
         .with_state(state)
 }
 
 async fn gardyns(State(PoolWrapper(pool)): State<PoolWrapper>) -> Json<Vec<Gardyn>> {
+    // TODO fix unwrap
     let mut connection = pool.get().await.unwrap();
 
     let gardyns = database::gardyns::get_all(&mut connection).await.unwrap();
@@ -30,31 +30,51 @@ async fn gardyns(State(PoolWrapper(pool)): State<PoolWrapper>) -> Json<Vec<Gardy
     Json(gardyns)
 }
 
+#[axum::debug_handler]
 async fn plants(
     Path(id): Path<i32>,
     State(PoolWrapper(pool)): State<PoolWrapper>,
 ) -> Json<Vec<(GardynSlot, Option<Plant>)>> {
+    // TODO fix unwrap
     let mut connection = pool.get().await.unwrap();
 
-    let plants = database::gardyns::get_plants(&mut connection, id)
+    let plants = database::plants::get_by_gardyn_id(&mut connection, id)
         .await
         .unwrap();
 
     Json(plants)
 }
 
-#[derive(Deserialize)]
-struct MovePlant {
-    gardyn_id: i32,
-    x: i32,
-    y: i32,
+async fn move_plant(
+    Path(plant_id): Path<i32>,
+    Path(slot_id): Path<i32>,
+    State(PoolWrapper(pool)): State<PoolWrapper>,
+) -> Json<serde_json::Value> {
+    let mut connection = pool.get().await.unwrap();
+    // TODO: does the person invoking this own the plant?
+    // does the person invoking this own the target slot_id?
+    database::slots::move_plant_to_slot(&mut connection, plant_id, slot_id)
+        .await
+        .unwrap();
+
+    Json(json!({
+        "status": "ok",
+    }))
 }
 
-async fn move_plant(
-    Path(_plant_id): Path<i32>,
-    State(PoolWrapper(_pool)): State<PoolWrapper>,
-    Json(_move_plant): Json<MovePlant>,
-) -> Json<Vec<Plant>> {
-    tokio::time::sleep(Duration::from_secs(9)).await;
-    todo!()
+async fn swap_plants_in_slots(
+    Path(slot_id1): Path<i32>,
+    Path(slot_id2): Path<i32>,
+    State(PoolWrapper(pool)): State<PoolWrapper>,
+) -> Json<serde_json::Value> {
+    let mut connection = pool.get().await.unwrap();
+
+    // TODO: does the person invoking both slots?
+    database::slots::swap_plants_in_slots(&mut connection, slot_id1, slot_id2)
+        .await
+        .unwrap();
+
+    Json(json!({
+        "status": "ok",
+    }))
 }

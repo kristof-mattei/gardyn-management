@@ -1,4 +1,4 @@
-CREATE TABLE plants (
+CREATE TABLE plant (
   id SERIAL,
   name VARCHAR(255) NOT NULL,
   species_id INTEGER REFERENCES species (id),
