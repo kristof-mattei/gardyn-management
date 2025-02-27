@@ -1,6 +1,6 @@
 use axum::Router;
 use tower_http::services::{ServeDir, ServeFile};
-use tracing::{event, Level};
+use tracing::{Level, event};
 
 pub fn build_html_router() -> Router {
     if let Ok(front_end_proxy) = std::env::var("PROXY_FRONT_END").as_deref() {

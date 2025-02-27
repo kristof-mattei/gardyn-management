@@ -3,7 +3,7 @@ use std::net::SocketAddr;
 use axum::Router;
 use color_eyre::eyre::{self, Context};
 use tokio_util::sync::CancellationToken;
-use tracing::{event, Level};
+use tracing::{Level, event};
 
 /// Set up server on socket, with a router, and a cancellation token for graceful shutdown
 ///

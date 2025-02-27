@@ -1,5 +1,5 @@
 use color_eyre::eyre;
-use tokio::signal::unix::{signal, SignalKind};
+use tokio::signal::unix::{SignalKind, signal};
 use tokio::task::JoinHandle;
 
 pub mod env;

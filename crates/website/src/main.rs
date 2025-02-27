@@ -3,9 +3,9 @@ use std::net::SocketAddr;
 use std::time::Duration;
 
 use color_eyre::eyre;
-use diesel_async::pooled_connection::deadpool::Pool;
-use diesel_async::pooled_connection::AsyncDieselConnectionManager;
 use diesel_async::AsyncPgConnection;
+use diesel_async::pooled_connection::AsyncDieselConnectionManager;
+use diesel_async::pooled_connection::deadpool::Pool;
 use gardyn_management::router::build_router;
 use gardyn_management::server::setup_server;
 use gardyn_management::state::ApplicationState;
@@ -15,11 +15,11 @@ use tokio::signal;
 use tokio::time::timeout;
 use tokio_util::sync::CancellationToken;
 use tokio_util::task::TaskTracker;
-use tracing::{event, Level};
+use tracing::{Level, event};
+use tracing_subscriber::Layer;
 use tracing_subscriber::filter::EnvFilter;
 use tracing_subscriber::layer::SubscriberExt;
 use tracing_subscriber::util::SubscriberInitExt;
-use tracing_subscriber::Layer;
 
 #[expect(clippy::unnecessary_wraps)]
 fn build_configs() -> Result<Config, eyre::Report> {

@@ -23,8 +23,8 @@ pub struct ApplicationState {
     pub pool: PoolWrapper,
 }
 
-use diesel_async::pooled_connection::deadpool::Pool;
 use diesel_async::AsyncPgConnection;
+use diesel_async::pooled_connection::deadpool::Pool;
 
 impl ApplicationState {
     #[must_use]
