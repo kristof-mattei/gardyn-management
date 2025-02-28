@@ -2,8 +2,8 @@
 name = "gardyn-management"
 # don't change this, it's updated before an actual build by update-version.sh
 version = "0.0.0-development"
-edition = "2021"
-rust-version = "1.84.0"
+edition = "2024"
+rust-version = "1.85.0"
 authors = ["Kristof Mattei"]
 description = "Gardyn Management"
 license-file = "LICENSE"

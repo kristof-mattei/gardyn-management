@@ -1,6 +1,6 @@
 use chrono::NaiveDateTime;
-use diesel::prelude::{AsChangeset, Associations, Identifiable, Insertable, Queryable};
 use diesel::Selectable;
+use diesel::prelude::{AsChangeset, Associations, Identifiable, Insertable, Queryable};
 use serde::{Deserialize, Serialize};
 
 #[derive(Insertable)]

@@ -1,6 +1,6 @@
+use axum::Router;
 use axum::extract::{Json, Path, State};
 use axum::routing::{get, post};
-use axum::Router;
 use database::models::{Gardyn, GardynSlot, Plant};
 use serde_json::json;
 
