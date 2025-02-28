@@ -12,7 +12,7 @@ services:
       # - ${PWD}/init.sql:/docker-entrypoint-initdb.d/init.sql
 
   pgadmin:
-    image: dpage/pgadmin4:latest@sha256:1b2f1ecb93ed2c20530703f77acdfa0da8c2470a4e17044504057cea2d6b4fac
+    image: dpage/pgadmin4:latest@sha256:bdebdfc4b165c10d0ad60e58f1d7ef41af6c881c9556ae331adaa35bba6dacf3
     ports:
       - 15433:80
     env_file:
