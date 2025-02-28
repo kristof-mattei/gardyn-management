@@ -12,3 +12,6 @@ NEXT_VERSION
 .env
 
 /.local/
+/crates/database/profiling/
+/crates/website/profiling/
+/crates/workspace-hack/profiling/
