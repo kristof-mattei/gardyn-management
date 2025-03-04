@@ -15,7 +15,7 @@ repository = "https://github.com/kristof-mattei/gardyn-management"
 workspace-hack = { version = "0.1", path = "../workspace-hack" }
 
 chrono = { version = "0.4.40", features = ["serde"] }
-diesel = { version = "2.2.7", features = ["chrono", "postgres"] }
+diesel = { version = "2.2.8", features = ["chrono", "postgres"] }
 diesel-async = { version = "0.5.2", features = ["deadpool", "postgres"] }
 color-eyre = { git = "https://github.com/eyre-rs/eyre", rev = "c4ee249f7c51dc6452e8704ae8d117d90d6eeebc" }
 serde = { version = "1.0.218", features = ["derive"] }
