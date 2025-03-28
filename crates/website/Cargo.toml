@@ -35,7 +35,7 @@ tokio-console = []
 database = { path = "../database" }
 workspace-hack = { version = "0.1", path = "../workspace-hack" }
 
-axum = { version = "0.8.1", features = ["macros"] }
+axum = { version = "0.8.3", features = ["macros"] }
 axum-proxy = { version = "0.3.0", features = ["axum"] }
 chrono = { version = "0.4.40" }
 color-eyre = { git = "https://github.com/eyre-rs/eyre", rev = "c4ee249f7c51dc6452e8704ae8d117d90d6eeebc" }
