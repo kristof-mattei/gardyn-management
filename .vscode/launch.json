@@ -22,8 +22,8 @@
                 "PROXY_FRONT_END": "127.0.0.1:4000",
                 "RUST_LOG": "INFO,socketioxide=INFO,engineioxide=INFO,gardyn_management=TRACE"
             },
-            "internalConsoleOptions": "openOnSessionStart",
-            "terminal": "console"
+            "internalConsoleOptions": "neverOpen",
+            "terminal": "integrated"
         },
         {
             "type": "lldb",
@@ -43,8 +43,8 @@
                 "PROXY_FRONT_END": "127.0.0.1:4000",
                 "RUST_LOG": "INFO,socketioxide=INFO,engineioxide=INFO,gardyn_management=TRACE"
             },
-            "internalConsoleOptions": "openOnSessionStart",
-            "terminal": "console"
+            "internalConsoleOptions": "neverOpen",
+            "terminal": "integrated"
         },
         {
             "type": "lldb",
@@ -64,8 +64,8 @@
                 "PROXY_FRONT_END": "127.0.0.1:4000",
                 "RUST_LOG": "INFO,socketioxide=INFO,engineioxide=INFO,gardyn_management=TRACE"
             },
-            "internalConsoleOptions": "openOnSessionStart",
-            "terminal": "console"
+            "internalConsoleOptions": "neverOpen",
+            "terminal": "integrated"
         }
     ]
 }
