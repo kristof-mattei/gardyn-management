@@ -12,10 +12,9 @@ keywords = ["random"]
 repository = "https://github.com/kristof-mattei/gardyn-management"
 
 [dependencies]
-workspace-hack = { version = "0.1", path = "../workspace-hack" }
-
 chrono = { version = "0.4.41", features = ["serde"] }
+color-eyre = "0.6.4"
 diesel = { version = "2.2.10", features = ["chrono", "postgres"] }
 diesel-async = { version = "0.5.2", features = ["deadpool", "postgres"] }
-color-eyre = { git = "https://github.com/eyre-rs/eyre", rev = "c4ee249f7c51dc6452e8704ae8d117d90d6eeebc" }
 serde = { version = "1.0.219", features = ["derive"] }
+workspace-hack = { version = "0.1", path = "../workspace-hack" }
