@@ -4,10 +4,10 @@ repository:
   # See https://docs.github.com/en/rest/reference/repos#update-a-repository for all available settings.
 
   # The name of the repository. Changing this will rename the repository
-  # name: repo-name
+  name: gardyn-management
 
   # A short description of the repository that will show up on GitHub
-  description: Application to manage the events that happe to your Gardyn
+  description: Application to manage the events that happen to your Gardyn
 
   # A URL with more information about the repository
   # homepage: https://example.github.io/

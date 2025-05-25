@@ -5,7 +5,7 @@
     "lldb.launch.preRunCommands": [
         "command script import ${workspaceFolder}/.vscode/rust_prettifier_for_lldb.py"
     ],
-    "prettier.configPath": "./.prettierrc.cjs",
+    "prettier.configPath": "./prettier.config.mjs",
     "rust-analyzer.runnables.extraEnv": {
         "PROXY_FRONT_END": "127.0.0.1:4000",
         "RUST_LOG": "INFO,socketioxide=INFO,engineioxide=INFO,gardyn_management=TRACE"

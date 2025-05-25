@@ -9,7 +9,11 @@
             "request": "launch",
             "name": "Debug executable 'gardyn-management'",
             "cargo": {
-                "args": ["build", "--bin=gardyn-management", "--package=gardyn-management"],
+                "args": [
+                    "build",
+                    "--bin=gardyn-management",
+                    "--package=gardyn-management"
+                ],
                 "filter": {
                     "name": "gardyn-management",
                     "kind": "bin"
@@ -30,7 +34,12 @@
             "request": "launch",
             "name": "Debug unit tests in executable 'gardyn-management'",
             "cargo": {
-                "args": ["test", "--no-run", "--bin=gardyn-management", "--package=gardyn-management"],
+                "args": [
+                    "test",
+                    "--no-run",
+                    "--bin=gardyn-management",
+                    "--package=gardyn-management"
+                ],
                 "filter": {
                     "name": "gardyn-management",
                     "kind": "bin"
@@ -51,7 +60,12 @@
             "request": "launch",
             "name": "Debug integration test 'integration_tests'",
             "cargo": {
-                "args": ["test", "--no-run", "--test=integration_tests", "--package=gardyn-management"],
+                "args": [
+                    "test",
+                    "--no-run",
+                    "--test=integration_tests",
+                    "--package=gardyn-management"
+                ],
                 "filter": {
                     "name": "integration_tests",
                     "kind": "test"

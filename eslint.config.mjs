@@ -1,6 +1,7 @@
 import js from "@eslint/js";
-import stylistic from "@stylistic/eslint-plugin-ts";
+import stylistic from "@stylistic/eslint-plugin";
 import tsParser from "@typescript-eslint/parser";
+import { globalIgnores } from "eslint/config";
 import love from "eslint-config-love";
 import commentsPlugin from "eslint-plugin-eslint-comments";
 import importPlugin from "eslint-plugin-import";
@@ -81,6 +82,7 @@ const sharedRules = {
 };
 
 export default tseslint.config(
+    globalIgnores([".local/"]),
     js.configs.recommended,
     {
         ignores: ["dist/**", "reports/**", "coverage/**"],
