@@ -13,7 +13,7 @@ repository = "https://github.com/kristof-mattei/gardyn-management"
 
 [dependencies]
 chrono = { version = "0.4.41", features = ["serde"] }
-color-eyre = "0.6.4"
+color-eyre = "0.6.5"
 diesel = { version = "2.2.10", features = ["chrono", "postgres"] }
 diesel-async = { version = "0.5.2", features = ["deadpool", "postgres"] }
 serde = { version = "1.0.219", features = ["derive"] }
