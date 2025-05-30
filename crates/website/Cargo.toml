@@ -35,7 +35,7 @@ tokio-console = []
 axum = { version = "0.8.4", features = ["macros"] }
 axum-proxy = { version = "0.5.1", features = ["axum"] }
 chrono = { version = "0.4.41" }
-color-eyre = "0.6.4"
+color-eyre = "0.6.5"
 console-subscriber = "0.4.1"
 database = { path = "../database" }
 diesel = { version = "2.2.10", features = ["chrono", "postgres"] }
