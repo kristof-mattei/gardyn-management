@@ -1,15 +1,14 @@
 [package]
 name = "gardyn-management"
-# don't change this, it's updated before an actual build by update-version.sh
-version = "0.0.0-development"
-edition = "2024"
-rust-version = "1.85.0"
-authors = ["Kristof Mattei"]
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+authors.workspace = true
 description = "Gardyn Management"
-license-file = "LICENSE"
-categories = ["fun"]
-keywords = ["random"]
-repository = "https://github.com/kristof-mattei/gardyn-management"
+license-file.workspace = true
+categories.workspace = true
+keywords.workspace = true
+repository.workspace = true
 
 [lints]
 workspace = true

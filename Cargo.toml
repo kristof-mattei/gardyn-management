@@ -1,6 +1,15 @@
 [workspace]
 resolver = "2"
 members = ["crates/*"]
+package.version = "0.0.0-development"
+package.edition = "2024"
+package.rust-version = "1.85.0"
+package.authors = ["Kristof Mattei"]
+package.description = "Gardyn Management Database"
+package.license-file = "LICENSE"
+package.categories = ["fun"]
+package.keywords = ["random"]
+package.repository = "https://github.com/kristof-mattei/gardyn-management"
 
 [workspace.lints.clippy]
 # don't stop from compiling / running
