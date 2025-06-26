@@ -1,7 +1,6 @@
 use color_eyre::eyre;
 use url::Url;
 
-#[allow(dead_code)]
 /// Adds a segment to a Url
 /// # Errors
 /// When the Url given is relative

@@ -2,7 +2,6 @@ use color_eyre::Report;
 use color_eyre::eyre::Context;
 use url::Url;
 
-#[allow(dead_code)]
 /// Gets an environment vaiable and tries to convert it to a Url
 ///
 /// # Errors
