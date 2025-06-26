@@ -1,6 +1,6 @@
-#[allow(clippy::all)]
-#[allow(non_snake_case)]
-#[allow(clippy::wildcard_imports)]
+#![expect(clippy::missing_errors_doc)]
+#![expect(clippy::unused_async)]
+
 pub mod schema;
 
 pub mod gardyns;

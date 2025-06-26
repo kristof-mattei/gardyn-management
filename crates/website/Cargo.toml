@@ -11,6 +11,9 @@ categories = ["fun"]
 keywords = ["random"]
 repository = "https://github.com/kristof-mattei/gardyn-management"
 
+[lints]
+workspace = true
+
 [lib]
 name = "gardyn_management"
 path = "src/lib.rs"

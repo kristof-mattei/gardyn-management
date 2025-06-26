@@ -1,3 +1,5 @@
+#![expect(clippy::unused_async)]
+
 use color_eyre::eyre;
 use database::models::{Gardyn, GardynSlot, Plant};
 use database::schema::{gardyn, gardyn_slot, plant};
