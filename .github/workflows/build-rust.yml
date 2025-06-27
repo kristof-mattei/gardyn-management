@@ -257,7 +257,8 @@ jobs:
             --binary-path ./target/debug/ \
             --branch \
             --ignore-not-existing \
-            --keep-only "src/**" \
+            --keep-only "database/src/**" \
+            --keep-only "website/src/**" \
             --llvm \
             --output-path ./reports/lcov.info \
             --output-type lcov \
