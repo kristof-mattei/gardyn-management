@@ -15,3 +15,5 @@ NEXT_VERSION
 /crates/database/profiling/
 /crates/website/profiling/
 /crates/workspace-hack/profiling/
+
+tsconfig.tsbuildinfo
