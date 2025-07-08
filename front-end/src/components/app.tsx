@@ -9,9 +9,9 @@ import axios from "axios";
 import type React from "react";
 import { useEffect, useState } from "react";
 
-import { ErrorBoundary } from "@/components/error-boundary";
-import { GardynViewer } from "@/components/gardyn-viewer";
-import type { Gardyn } from "@/lib/gardyn";
+import { ErrorBoundary } from "@/components/error-boundary.tsx";
+import { GardynViewer } from "@/components/gardyn-viewer.tsx";
+import type { Gardyn } from "@/lib/gardyn.ts";
 
 const appQueryClient = new QueryClient({
     defaultOptions: {

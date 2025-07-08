@@ -1,16 +1,19 @@
 {
+    "Prettier-SQL.SQLFlavourOverride": "sql",
+    "Prettier-SQL.commaPosition": "before",
+    "Prettier-SQL.keywordCase": "upper",
     "debug.internalConsoleOptions": "neverOpen",
-    "lldb.launch.terminal": "integrated",
     "lldb.launch.expressions": "simple",
     "lldb.launch.preRunCommands": [
         "command script import ${workspaceFolder}/.vscode/rust_prettifier_for_lldb.py"
     ],
+    "lldb.launch.terminal": "integrated",
     "prettier.configPath": "./prettier.config.mjs",
     "rust-analyzer.runnables.extraEnv": {
         "PROXY_FRONT_END": "127.0.0.1:4000",
         "RUST_LOG": "INFO,socketioxide=INFO,engineioxide=INFO,gardyn_management=TRACE"
     },
-    "Prettier-SQL.keywordCase": "upper",
-    "Prettier-SQL.SQLFlavourOverride": "sql",
-    "Prettier-SQL.commaPosition": "before"
+    "typescript.preferences.importModuleSpecifier": "non-relative",
+    "typescript.preferences.importModuleSpecifierEnding": "js",
+    "typescript.tsdk": "node_modules/typescript/lib"
 }

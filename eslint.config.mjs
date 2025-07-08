@@ -1,7 +1,6 @@
 import js from "@eslint/js";
 import stylistic from "@stylistic/eslint-plugin";
 import tsParser from "@typescript-eslint/parser";
-import { globalIgnores } from "eslint/config";
 import love from "eslint-config-love";
 import commentsPlugin from "eslint-plugin-eslint-comments";
 import importPlugin from "eslint-plugin-import";
@@ -9,7 +8,9 @@ import nPlugin from "eslint-plugin-n";
 import perfectionist from "eslint-plugin-perfectionist";
 import prettier from "eslint-plugin-prettier/recommended";
 import promise from "eslint-plugin-promise";
-
+import reactPlugin from "eslint-plugin-react";
+import reactHookFormPlugin from "eslint-plugin-react-hook-form";
+import reactRefreshPlugin from "eslint-plugin-react-refresh";
 import eslintPluginUnicorn from "eslint-plugin-unicorn";
 import tseslint from "typescript-eslint";
 
@@ -19,7 +20,7 @@ const sharedRules = {
     curly: ["error", "all"],
     "eol-last": ["error", "always"],
     eqeqeq: ["error", "always"],
-    // "no-alert": ["off"],
+    "no-alert": ["off"],
     "no-console": ["off"],
     "max-len": ["off"],
     "max-nested-callbacks": ["off"],
@@ -32,7 +33,6 @@ const sharedRules = {
         },
     ],
     "no-restricted-syntax": ["error", "DebuggerStatement", "LabeledStatement", "WithStatement"],
-    "no-return-await": ["error"],
     "no-shadow": ["error"],
     "no-underscore-dangle": ["off"],
     "no-unused-expressions": ["error"],
@@ -61,9 +61,11 @@ const sharedRules = {
 
     "import/extensions": [
         "error",
-        "never",
+        "ignorePackages",
         {
             json: "always",
+            ts: "always",
+            tsx: "always",
         },
     ],
     "import/newline-after-import": ["error"],
@@ -82,14 +84,14 @@ const sharedRules = {
 };
 
 export default tseslint.config(
-    globalIgnores([".local/"]),
     js.configs.recommended,
     {
         ignores: ["dist/**", "reports/**", "coverage/**"],
     },
-    eslintPluginUnicorn.configs["flat/all"],
+    eslintPluginUnicorn.configs["all"],
     {
         languageOptions: {
+            ...reactPlugin.configs.flat["jsx-runtime"].languageOptions,
             parser: tsParser,
             parserOptions: {
                 ecmaVersion: "latest",
@@ -98,22 +100,30 @@ export default tseslint.config(
                 tsconfigRootDir: import.meta.dirname,
             },
         },
+        ...reactPlugin.configs.flat["jsx-runtime"],
         plugins: {
             import: importPlugin,
+            "react-refresh": reactRefreshPlugin,
+            "react-hook-form": reactHookFormPlugin,
         },
         settings: {
             "import/resolver": {
-                node: {
-                    extensions: [".d.ts", ".ts"],
-                },
+                node: {},
                 typescript: {
                     alwaysTryTypes: true,
                 },
             },
+            react: {
+                version: "detect",
+            },
         },
-        extends: [eslintPluginUnicorn.configs["flat/recommended"]],
+        extends: [eslintPluginUnicorn.configs["recommended"]],
         rules: {
             ...importPlugin.configs.recommended.rules,
+            ...importPlugin.configs.react.rules,
+            ...reactHookFormPlugin.configs.recommended.rules,
+
+            "react-refresh/only-export-components": "error",
 
             ...sharedRules,
         },
@@ -147,9 +157,7 @@ export default tseslint.config(
         ],
         settings: {
             "import/resolver": {
-                node: {
-                    extensions: [".ts"],
-                },
+                node: {},
                 typescript: {
                     alwaysTryTypes: true,
                 },
@@ -157,11 +165,12 @@ export default tseslint.config(
         },
         rules: {
             ...importPlugin.configs.typescript.rules,
+            ...importPlugin.configs.react.rules,
             ...importPlugin.configs.recommended.rules,
 
             ...sharedRules,
 
-            "no-return-await": ["off"],
+            "no-restricted-imports": ["off"],
 
             "@stylistic/ts/no-extra-semi": ["error"],
 
