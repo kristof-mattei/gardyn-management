@@ -66,7 +66,7 @@ RUN --mount=type=cache,target=/build/target,sharing=locked \
     /build-scripts/build.sh install --path . --locked --target ${TARGET} --root /output
 
 # Front-end (NPM) build
-FROM --platform=${BUILDPLATFORM} node:22.17.0-alpine@sha256:666d1e3f9af77c471deabf824addb8ea185ab6843637886d22250c1aff3aff2c AS typescript-build
+FROM --platform=${BUILDPLATFORM} node:22.17.0-alpine@sha256:10962e8568729b0cfd506170c5a2d1918a2c10ac08c0e6900180b4bac061adc9 AS typescript-build
 
 # The following block
 # creates an empty app, and we copy in package.json and packge-lock.json as they represent our dependencies
