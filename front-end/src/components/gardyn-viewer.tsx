@@ -2,7 +2,7 @@ import type React from "react";
 
 import { useEffect, useState } from "react";
 
-import { ColumnViewer } from "@/components/column-viewer";
+import { ColumnViewer } from "@/components/column-viewer.tsx";
 import type { Column } from "@/lib/column";
 import type { Gardyn } from "@/lib/gardyn";
 
