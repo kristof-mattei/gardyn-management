@@ -73,7 +73,7 @@ async fn start_tasks() -> Result<(), eyre::Report> {
 
             match server {
                 Err(e) => {
-                    event!(Level::ERROR, message = "Server shutting down", ?e);
+                    event!(Level::ERROR, "Server shutting down", ?e);
                 },
                 Ok(()) => {
                     event!(Level::INFO, "Webserver shut down gracefully");
@@ -90,22 +90,22 @@ async fn start_tasks() -> Result<(), eyre::Report> {
     tokio::select! {
         r = utils::wait_for_sigterm() => {
             if let Err(e) = r {
-                event!(Level::ERROR, message = "Failed to register SIGERM handler, aborting", ?e);
+                event!(Level::ERROR, "Failed to register SIGERM handler, aborting", ?e);
             } else {
                 // we completed because ...
-                event!(Level::WARN, message = "Sigterm detected, stopping all tasks");
+                event!(Level::WARN, "Sigterm detected, stopping all tasks");
             }
         },
         r = signal::ctrl_c() => {
             if let Err(e) = r {
-                event!(Level::ERROR, message = "Failed to register CTRL+C handler, aborting", ?e);
+                event!(Level::ERROR, "Failed to register CTRL+C handler, aborting", ?e);
             } else {
                 // we completed because ...
-                event!(Level::WARN, message = "CTRL+C detected, stopping all tasks");
+                event!(Level::WARN, "CTRL+C detected, stopping all tasks");
             }
         },
         () = token.cancelled() => {
-            event!(Level::ERROR, message = "Underlying task stopped, stopping all others tasks");
+            event!(Level::ERROR, "Underlying task stopped, stopping all others tasks");
         },
     };
 
@@ -121,10 +121,7 @@ async fn start_tasks() -> Result<(), eyre::Report> {
         .await
         .is_err()
     {
-        event!(
-            Level::ERROR,
-            message = "Tasks didn't stop within allotted time!"
-        );
+        event!(Level::ERROR, "Tasks didn't stop within allotted time!");
     }
 
     event!(Level::INFO, "Goodbye");
