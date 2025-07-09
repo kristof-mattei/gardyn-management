@@ -1,11 +1,11 @@
 use color_eyre::eyre::{self, Context};
 use url::Url;
 
-/// Gets an environment vaiable and tries to convert it to a Url
+/// Gets an environment variable and tries to convert it to an Url
 ///
 /// # Errors
-/// When the variable could not be converted to a Url
-#[expect(unused)]
+/// When the env value for `key` could not be converted to an Url
+#[expect(dead_code)]
 pub fn get_env_as_url(key: &str) -> Result<Url, eyre::Report> {
     let value = std::env::var(key)?;
 

@@ -30,8 +30,10 @@ mod tests {
 
         let new_url = add_segments(url, &["foobar"]);
 
-        assert!(new_url.is_ok());
-        assert_eq!(new_url.unwrap().as_str(), "https://example.com/foobar");
+        assert!(matches!(
+            new_url.map(Into::<String>::into).as_deref(),
+            Ok("https://example.com/foobar")
+        ));
     }
 
     #[test]
@@ -40,7 +42,9 @@ mod tests {
 
         let new_url = add_segments(url, &["foo", "bar"]);
 
-        assert!(new_url.is_ok());
-        assert_eq!(new_url.unwrap().as_str(), "https://example.com/foo/bar");
+        assert!(matches!(
+            new_url.map(Into::<String>::into).as_deref(),
+            Ok("https://example.com/foo/bar")
+        ));
     }
 }
