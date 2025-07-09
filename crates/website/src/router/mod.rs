@@ -1,12 +1,11 @@
-#![deny(clippy::unused_async)]
+mod api_router;
+mod html_router;
 
 use axum::Router;
 use axum::handler::HandlerWithoutStateExt;
 use axum::http::StatusCode;
 use axum::response::IntoResponse;
 use axum::routing::get;
-mod api_router;
-mod html_router;
 use tower_http::cors::CorsLayer;
 use tower_http::trace::{DefaultOnRequest, DefaultOnResponse, TraceLayer};
 use tracing::Level;

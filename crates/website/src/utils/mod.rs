@@ -1,9 +1,9 @@
+pub mod env;
+pub mod url;
+
 use color_eyre::eyre;
 use tokio::signal::unix::{SignalKind, signal};
 use tokio::task::JoinHandle;
-
-pub mod env;
-pub mod url;
 
 /// Use this when you have a `JoinHandle<Result<T, E>>`
 /// and you want to use it with `tokio::try_join!`
@@ -16,6 +16,7 @@ pub mod url;
 /// # Errors
 /// * When there is an issue executing the task
 /// * When the task itself failed
+#[expect(unused)]
 pub async fn flatten_handle<T, E>(handle: JoinHandle<Result<T, E>>) -> Result<T, eyre::Report>
 where
     E: 'static + Sync + Send,

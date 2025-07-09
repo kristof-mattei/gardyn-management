@@ -13,14 +13,6 @@ repository.workspace = true
 [lints]
 workspace = true
 
-[lib]
-name = "gardyn_management"
-path = "src/lib.rs"
-
-[[bin]]
-name = "gardyn-management"
-path = "src/main.rs"
-
 [[bin]]
 name = "gardyn-management-seed"
 path = "src/bin/seed.rs"
