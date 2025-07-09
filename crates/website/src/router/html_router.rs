@@ -3,7 +3,7 @@ use tower_http::services::{ServeDir, ServeFile};
 use tracing::{Level, event};
 
 pub fn build_html_router() -> Router {
-    if let Ok(front_end_proxy) = std::env::var("PROXY_FRONT_END").as_deref() {
+    if let Ok(front_end_proxy) = std::env::var("FRONT_END_PROXY").as_deref() {
         event!(Level::INFO, "Serving website via proxy");
 
         let vite_proxy_service_builder = axum_proxy::builder_http(front_end_proxy).unwrap();

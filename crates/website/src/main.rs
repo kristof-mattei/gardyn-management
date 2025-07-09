@@ -1,16 +1,19 @@
+mod router;
+mod server;
+mod state;
+mod states;
+mod utils;
+
 use std::env;
+use std::env::VarError;
 use std::net::SocketAddr;
 use std::time::Duration;
 
+use color_eyre::config::HookBuilder;
 use color_eyre::eyre;
 use diesel_async::AsyncPgConnection;
 use diesel_async::pooled_connection::AsyncDieselConnectionManager;
 use diesel_async::pooled_connection::deadpool::Pool;
-use gardyn_management::router::build_router;
-use gardyn_management::server::setup_server;
-use gardyn_management::state::ApplicationState;
-use gardyn_management::states::config::Config;
-use gardyn_management::utils;
 use tokio::signal;
 use tokio::time::timeout;
 use tokio_util::sync::CancellationToken;
@@ -20,6 +23,11 @@ use tracing_subscriber::Layer;
 use tracing_subscriber::filter::EnvFilter;
 use tracing_subscriber::layer::SubscriberExt;
 use tracing_subscriber::util::SubscriberInitExt;
+
+use crate::router::build_router;
+use crate::server::setup_server;
+use crate::state::ApplicationState;
+use crate::states::config::Config;
 
 #[expect(clippy::unnecessary_wraps)]
 fn build_configs() -> Result<Config, eyre::Report> {
@@ -56,17 +64,19 @@ async fn start_tasks() -> Result<(), eyre::Report> {
         let bind_to = application_state.config.bind_to;
         let router = build_router(application_state);
 
+        let token = token.clone();
+
         tasks.spawn(async move {
             let _guard = token.clone().drop_guard();
 
-            let server = setup_server(bind_to, router, token.clone()).await;
+            let server = setup_server(bind_to, router, token).await;
 
             match server {
                 Err(e) => {
                     event!(Level::ERROR, message = "Server shutting down", ?e);
                 },
                 Ok(()) => {
-                    event!(Level::INFO, "Server shutting down gracefully");
+                    event!(Level::INFO, "Webserver shut down gracefully");
                 },
             }
         });
@@ -117,34 +127,47 @@ async fn start_tasks() -> Result<(), eyre::Report> {
         );
     }
 
-    event!(Level::INFO, message = "Goodbye");
+    event!(Level::INFO, "Goodbye");
 
     Ok(())
 }
 
+fn build_default_filter() -> EnvFilter {
+    EnvFilter::builder()
+        .parse(format!("INFO,{}=TRACE", env!("CARGO_CRATE_NAME")))
+        .expect("Default filter should always work")
+}
+
 fn init_tracing() -> Result<(), eyre::Report> {
-    let main_filter = EnvFilter::builder().parse(
-        env::var(EnvFilter::DEFAULT_ENV)
-            .unwrap_or_else(|_| format!("INFO,{}=TRACE", env!("CARGO_CRATE_NAME"))),
-    )?;
+    let (filter, filter_parsing_error) = match env::var(EnvFilter::DEFAULT_ENV) {
+        Ok(user_directive) => match EnvFilter::builder().parse(user_directive) {
+            Ok(filter) => (filter, None),
+            Err(error) => (build_default_filter(), Some(eyre::Report::new(error))),
+        },
+        Err(VarError::NotPresent) => (build_default_filter(), None),
+        Err(error @ VarError::NotUnicode(_)) => {
+            (build_default_filter(), Some(eyre::Report::new(error)))
+        },
+    };
 
-    let layers = vec![
-        #[cfg(feature = "tokio-console")]
-        console_subscriber::ConsoleLayer::builder()
-            .with_default_env()
-            .spawn()
-            .boxed(),
-        tracing_subscriber::fmt::layer()
-            .with_filter(main_filter)
-            .boxed(),
-        tracing_error::ErrorLayer::default().boxed(),
-    ];
+    let registry = tracing_subscriber::registry();
 
-    Ok(tracing_subscriber::registry().with(layers).try_init()?)
+    #[cfg(feature = "tokio-console")]
+    let registry = registry.with(console_subscriber::ConsoleLayer::builder().spawn());
+
+    registry
+        .with(tracing_subscriber::fmt::layer().with_filter(filter))
+        .with(tracing_error::ErrorLayer::default())
+        .try_init()?;
+
+    filter_parsing_error.map_or(Ok(()), Err)
 }
 
 fn main() -> Result<(), eyre::Report> {
-    color_eyre::config::HookBuilder::default().install()?;
+    HookBuilder::default()
+        .capture_span_trace_by_default(true)
+        .display_env_section(false)
+        .install()?;
 
     dotenvy::dotenv()?;
 
