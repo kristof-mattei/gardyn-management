@@ -72,8 +72,8 @@ async fn start_tasks() -> Result<(), eyre::Report> {
             let server = setup_server(bind_to, router, token).await;
 
             match server {
-                Err(e) => {
-                    event!(Level::ERROR, "Server shutting down", ?e);
+                Err(err) => {
+                    event!(Level::ERROR, ?err, "Server shutting down");
                 },
                 Ok(()) => {
                     event!(Level::INFO, "Webserver shut down gracefully");
@@ -89,16 +89,16 @@ async fn start_tasks() -> Result<(), eyre::Report> {
     // another task when they complete (which means they failed)
     tokio::select! {
         r = utils::wait_for_sigterm() => {
-            if let Err(e) = r {
-                event!(Level::ERROR, "Failed to register SIGERM handler, aborting", ?e);
+            if let Err(err) = r {
+                event!(Level::ERROR, ?err, "Failed to register SIGERM handler, aborting");
             } else {
                 // we completed because ...
                 event!(Level::WARN, "Sigterm detected, stopping all tasks");
             }
         },
         r = signal::ctrl_c() => {
-            if let Err(e) = r {
-                event!(Level::ERROR, "Failed to register CTRL+C handler, aborting", ?e);
+            if let Err(err) = r {
+                event!(Level::ERROR, ?err, "Failed to register CTRL+C handler, aborting");
             } else {
                 // we completed because ...
                 event!(Level::WARN, "CTRL+C detected, stopping all tasks");
