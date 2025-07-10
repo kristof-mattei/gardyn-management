@@ -29,7 +29,6 @@ export default defineConfig(({ mode }) => {
         resolve: {
             alias: {
                 "@/": nodePath.resolve("src/"),
-                "~bootstrap": nodePath.resolve(import.meta.dirname, "node_modules/bootstrap"),
             },
         },
         plugins: [
