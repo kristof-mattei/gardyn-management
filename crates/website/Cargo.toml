@@ -32,7 +32,7 @@ chrono = { version = "0.4.41" }
 color-eyre = "0.6.5"
 console-subscriber = "0.4.1"
 database = { path = "../database" }
-diesel = { version = "2.2.11", features = ["chrono", "postgres"] }
+diesel = { version = "2.2.12", features = ["chrono", "postgres"] }
 diesel-async = { version = "0.6.1", features = ["deadpool", "postgres"] }
 dotenvy = "0.15.7"
 serde = { version = "1.0.219", features = ["derive"] }
