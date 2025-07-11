@@ -16,7 +16,7 @@ workspace = true
 [dependencies]
 chrono = { version = "0.4.41", features = ["serde"] }
 color-eyre = "0.6.5"
-diesel = { version = "2.2.11", features = ["chrono", "postgres"] }
+diesel = { version = "2.2.12", features = ["chrono", "postgres"] }
 diesel-async = { version = "0.6.1", features = ["deadpool", "postgres"] }
 serde = { version = "1.0.219", features = ["derive"] }
 workspace-hack = { version = "0.1", path = "../workspace-hack" }
