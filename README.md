@@ -19,3 +19,9 @@ Reminders:
 
 - When to feed (not needed as it added per gallon of water)
 - When to add h2o2
+
+## License
+
+MIT, see [LICENSE](./LICENSE)
+
+`SPDX-License-Identifier: MIT`
