@@ -1,19 +1,13 @@
-.cr-release-packages
-.cr-index
+/.local
+/coverage
+/dist
+/node_modules
+/profiling
+/reports
+/target
 
-/node_modules/
-/coverage/
-/reports/
-/profiling/
-/target/
-/dist/
-NEXT_VERSION
+# samply output
+/profile.json
 
 .env
-
-/.local/
-/crates/database/profiling/
-/crates/website/profiling/
-/crates/workspace-hack/profiling/
-
 tsconfig.tsbuildinfo
