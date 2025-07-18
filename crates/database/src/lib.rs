@@ -1,6 +1,7 @@
-#![expect(clippy::missing_errors_doc)]
-#![expect(clippy::unused_async)]
+#![expect(clippy::missing_errors_doc, reason = "WIP")]
+#![expect(clippy::unused_async, reason = "WIP")]
 
+#[expect(clippy::pub_use, reason = "macros")]
 pub mod schema;
 
 pub mod gardyns;

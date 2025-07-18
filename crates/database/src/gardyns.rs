@@ -1,6 +1,6 @@
 use color_eyre::eyre;
-use diesel::{QueryDsl, SelectableHelper};
-use diesel_async::{AsyncPgConnection, RunQueryDsl};
+use diesel::{QueryDsl as _, SelectableHelper as _};
+use diesel_async::{AsyncPgConnection, RunQueryDsl as _};
 
 use crate::models::Gardyn;
 use crate::schema;

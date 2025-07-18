@@ -1,10 +1,10 @@
-#![expect(clippy::unused_async)]
+#![expect(clippy::unused_async, reason = "Incomplete codebase")]
 
 use color_eyre::eyre;
 use database::models::{Gardyn, GardynSlot, Plant};
 use database::schema::{gardyn, gardyn_slot, plant};
-use diesel::{ExpressionMethods, SelectableHelper};
-use diesel_async::{AsyncConnection, AsyncPgConnection, RunQueryDsl};
+use diesel::{ExpressionMethods as _, SelectableHelper as _};
+use diesel_async::{AsyncConnection as _, AsyncPgConnection, RunQueryDsl as _};
 
 #[tokio::main]
 async fn main() -> eyre::Result<()> {
