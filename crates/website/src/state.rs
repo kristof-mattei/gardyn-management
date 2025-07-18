@@ -17,8 +17,8 @@ use crate::states::pool_wrapper::PoolWrapper;
 ///
 /// Note that `Arc::<Config>` then is cloned.
 impl FromRef<ApplicationState> for Arc<Config> {
-    fn from_ref(state: &ApplicationState) -> Self {
-        Arc::clone(&state.config)
+    fn from_ref(input: &ApplicationState) -> Self {
+        Arc::clone(&input.config)
     }
 }
 
@@ -31,8 +31,8 @@ impl FromRef<ApplicationState> for Arc<Config> {
 ///
 /// Note that `PoolWrapper` then is cloned.
 impl FromRef<ApplicationState> for PoolWrapper {
-    fn from_ref(state: &ApplicationState) -> Self {
-        state.pool.clone()
+    fn from_ref(input: &ApplicationState) -> Self {
+        input.pool.clone()
     }
 }
 
