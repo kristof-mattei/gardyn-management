@@ -3,6 +3,9 @@
 /dist
 /node_modules
 /profiling
+/crates/database/profiling
+/crates/website/profiling
+/crates/workspace-hack/profiling
 /reports
 /target
 
