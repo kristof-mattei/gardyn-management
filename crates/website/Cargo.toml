@@ -23,14 +23,14 @@ path = "tests/integration_tests.rs"
 
 [features]
 default = []
-tokio-console = []
+tokio-console = ["dep:console-subscriber"]
 
 [dependencies]
 axum = { version = "0.8.4", features = ["macros"] }
 axum-proxy = { version = "0.5.1", features = ["axum"] }
 chrono = { version = "0.4.41" }
 color-eyre = "0.6.5"
-console-subscriber = "0.4.1"
+console-subscriber = { version = "0.4.1", optional = true }
 database = { path = "../database" }
 diesel = { version = "2.2.12", features = ["chrono", "postgres"] }
 diesel-async = { version = "0.6.1", features = ["deadpool", "postgres"] }

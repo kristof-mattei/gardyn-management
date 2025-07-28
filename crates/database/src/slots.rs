@@ -1,3 +1,5 @@
+#![expect(clippy::todo, reason = "WIP")]
+
 use color_eyre::eyre;
 use diesel_async::AsyncPgConnection;
 
