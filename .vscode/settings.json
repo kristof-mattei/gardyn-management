@@ -4,9 +4,6 @@
     "Prettier-SQL.keywordCase": "upper",
     "debug.internalConsoleOptions": "neverOpen",
     "lldb.launch.expressions": "simple",
-    "lldb.launch.preRunCommands": [
-        "command script import ${workspaceFolder}/.vscode/rust_prettifier_for_lldb.py"
-    ],
     "lldb.launch.terminal": "integrated",
     "prettier.configPath": "./prettier.config.mjs",
     "rust-analyzer.runnables.extraEnv": {
