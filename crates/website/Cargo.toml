@@ -47,7 +47,7 @@ tokio-util = { version = "0.7.16", features = ["rt"] }
 tower-http = { version = "0.6.6", features = ["cors", "fs", "trace"] }
 tracing = "0.1.41"
 tracing-error = "0.2.1"
-tracing-subscriber = { version = "0.3.19", features = ["env-filter"] }
+tracing-subscriber = { version = "0.3.20", features = ["env-filter"] }
 url = { version = "2.5.7", features = ["serde"] }
 workspace-hack = { version = "0.1", path = "../workspace-hack" }
 
