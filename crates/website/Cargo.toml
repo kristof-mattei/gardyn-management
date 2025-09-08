@@ -28,7 +28,7 @@ tokio-console = ["dep:console-subscriber"]
 [dependencies]
 axum = { version = "0.8.4", features = ["macros"] }
 axum-proxy = { version = "0.5.1", features = ["axum"] }
-chrono = { version = "0.4.41" }
+chrono = { version = "0.4.42" }
 color-eyre = "0.6.5"
 console-subscriber = { version = "0.4.1", optional = true }
 database = { path = "../database" }
